@@ -1,0 +1,1 @@
+aws s3 sync C:\Users\{user}\Desktop\{sync folder} s3://{bucket name} | Out-File -Append -FilePath C:\Users\{user}\Desktop\s3-sync-log.txt
