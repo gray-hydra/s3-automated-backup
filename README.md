@@ -25,6 +25,7 @@ Shell scripts for automatically backing up files to AWS S3
 2. Run aws configure. Configure using the S3 access token generated earlier
 
 ### Scheduling shell scripts on Linux 
+
 We'll be using cron to schedule jobs. See https://crontab.guru/ for help with cron syntax
 
 1. Run the following terminal command to open the cron editor 
@@ -63,3 +64,18 @@ We'll be using cron to schedule jobs. See https://crontab.guru/ for help with cr
 	12. Select the powershell.exe program, usually located at C:\Windows\System32\WindowsPowershell\v1.0\powershell.exe
 	13. Add the following argument: "-File {path to your powershell script from step 1}"
 	14. Click OK then OK
+
+### Encrypting documents with Veracrypt
+
+1. Install veracrypt https://www.veracrypt.fr/en/Home.html
+2. Copy the shell script "encrypt-documents.sh" to your home directory
+3. Make encrypt-documents.sh executable
+> sudo chmod +x /home/{user}/encrypt-documents.sh
+4. Modify encrypt-documents.sh with your username, a veracrypt password, and any other desired changes
+5. Create a file randomdata.txt in your home directory. Add a bunch of gibberish to the file, or some kind of randomly generated data. 
+6. Run the following to open superuser crontab
+> sudo crontab -e
+7. If device is restarted every day: 
+> @reboot /home/{user}/encrypt-documents.sh >> /home/user/vc-log.txt 2>&1
+8. If device is running always-on, this will create a new veracrypt volume every Sunday at midnight: 
+> 0 0 * * 0 /home/{user}/encrypt-documents.sh >> /home/user/vc-log.txt 2>&1
